@@ -33,3 +33,6 @@ __int64 KiClearLastBranchRecordStack()
 Here, off_140C01DA0 resides at `nt!HalPrivateDispatchTable + 0x400`. This structure is exported from `ntoskrnl.exe` and resides in the .data section, meaning it's writable in memory and — crucially — not protected by PatchGuard.
 
 By overwriting this function pointer with our custom handler, we can safely intercept every context switch and check whether the scheduled thread is whitelisted. This technique provides a powerful, PatchGuard-safe method for selectively modifying execution environments on a per-thread basis.
+
+During a context switch, if the thread being scheduled is whitelisted, we modify its CR3 register to point to a custom page table. In this table, we insert a crafted PML4 entry that maps to our shadow address space — enabling controlled access to the shadow memory region.
+Therefor allowing only our permitted thread to be able to access the memory region.
