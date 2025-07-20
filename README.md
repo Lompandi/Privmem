@@ -1,5 +1,7 @@
 [Demo](./media/Privmem.mp4)
 
+### Implementation details
+
 Windows uses `nt!SwapContext` to handle context switching during task scheduling. To monitor which threads are being scheduled — and determine whether the current thread is whitelisted — we need a reliable way to observe these context switches.
 
 One approach is to hook into one of the indirect mechanisms triggered during a context switch, such as `EtwTraceContextSwap` or `KiClearLastBranchRecordStack`. Reverse engineering the context switch logic reveals the following structure:
