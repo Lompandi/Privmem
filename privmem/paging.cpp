@@ -9,10 +9,10 @@ namespace Page {
 	int FreePML4Index;
 
 	void CreateShadowRegion() {
-		void* ShadowPage = MmAllocateContiguousMemory(0x200000, PHYSICAL_ADDRESS{ .QuadPart = -1 });
-		MMPTE_HARDWARE* PD = (MMPTE_HARDWARE*)MmAllocateContiguousMemory(Page::Size, PHYSICAL_ADDRESS{ .QuadPart = -1 });
-		MMPTE_HARDWARE* PDPT = (MMPTE_HARDWARE*)MmAllocateContiguousMemory(Page::Size, PHYSICAL_ADDRESS{ .QuadPart = -1 });
-		Page::ClonePML4Virt = (MMPTE_HARDWARE*)MmAllocateContiguousMemory(Page::Size, PHYSICAL_ADDRESS{ .QuadPart = -1 });
+		void* ShadowPage		= MmAllocateContiguousMemory(0x200000, PHYSICAL_ADDRESS{ .QuadPart = -1 });
+		MMPTE_HARDWARE* PD		= (MMPTE_HARDWARE*)MmAllocateContiguousMemory(Page::Size, PHYSICAL_ADDRESS{ .QuadPart = -1 });
+		MMPTE_HARDWARE* PDPT	= (MMPTE_HARDWARE*)MmAllocateContiguousMemory(Page::Size, PHYSICAL_ADDRESS{ .QuadPart = -1 });
+		Page::ClonePML4Virt		= (MMPTE_HARDWARE*)MmAllocateContiguousMemory(Page::Size, PHYSICAL_ADDRESS{ .QuadPart = -1 });
 
 		memset(ShadowPage, 0, 0x200000);
 		memset(PD, 0, Page::Size);

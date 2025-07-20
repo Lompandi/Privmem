@@ -7,8 +7,6 @@
 #define PM_IMPORT extern "C" __declspec(dllimport)
 #define PM_EXPORT extern "C"
 
-void PmDbg(const char* format, ...);
-
 void kprintf(const char* format, ...);
 
 typedef enum _SYSTEM_INFORMATION_CLASS

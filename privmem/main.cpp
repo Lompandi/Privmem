@@ -7,7 +7,7 @@
 #define DEVICE_NAME L"\\Device\\privmem"
 #define SYMBOLIC_NAME L"\\DosDevices\\privmem"
 
-#define IOCTL_PM_INITIALIZE CTL_CODE(FILE_DEVICE_UNKNOWN, 0x800, METHOD_BUFFERED, FILE_ANY_ACCESS)
+#define IOCTL_PM_INITIALIZE CTL_CODE(FILE_DEVICE_UNKNOWN,		0x800, METHOD_BUFFERED, FILE_ANY_ACCESS)
 #define IOCTL_PM_WHITELIST_THREAD CTL_CODE(FILE_DEVICE_UNKNOWN, 0x801, METHOD_BUFFERED, FILE_ANY_ACCESS)
 
 Vector<PKTHREAD> WhitelistedThreads;
@@ -54,7 +54,6 @@ void PmDriverUnload(PDRIVER_OBJECT DriverObject) {
 	// Restore hook
 	//
 	HalPrivateDispatchTable.ContextSwapHook = OriginalHalEntry;
-
 	kprintf("[Privmem] Unloaded\n");
 }
 
@@ -133,8 +132,6 @@ NTSTATUS PmDriverDeviceControl(PDEVICE_OBJECT DeviceObject, PIRP Irp) {
 PM_EXPORT NTSTATUS DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING RegistryPath) {
 	UNREFERENCED_PARAMETER(RegistryPath);
 
-	//TODO: Check here
-
 	SYSTEM_MODULE_ENTRY Ntoskrnl = { 0 };
 	if (!FindKernelModule("ntoskrnl.exe", &Ntoskrnl)) {
 		kprintf("[Privmem] ntoskrnl.exe not found\n");
@@ -158,8 +155,8 @@ PM_EXPORT NTSTATUS DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING Regi
 		return status;
 	}
 
-	DriverObject->MajorFunction[IRP_MJ_CREATE] = PmDriverCreateClose;
-	DriverObject->MajorFunction[IRP_MJ_CLOSE] = PmDriverCreateClose;
+	DriverObject->MajorFunction[IRP_MJ_CREATE]	= PmDriverCreateClose;
+	DriverObject->MajorFunction[IRP_MJ_CLOSE]	= PmDriverCreateClose;
 	DriverObject->MajorFunction[IRP_MJ_DEVICE_CONTROL] = PmDriverDeviceControl;
 	DriverObject->DriverUnload = PmDriverUnload;
 

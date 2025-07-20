@@ -9,6 +9,9 @@ namespace Page {
 	extern UINT64 CloneCR3Phys;
 	extern int FreePML4Index;
 
+	//
+	// Create a shadow region that will only be accessable from whitelisted thread.
+	//
 	void CreateShadowRegion();
 
 	void ConstructPML4(_In_ MMPTE_HARDWARE* PML4E, _In_ UINT64 Phys, _In_ bool Usermode);

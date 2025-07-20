@@ -13,16 +13,6 @@ void kprintf(const char* format, ...) {
     va_end(args);
 }
 
-void PmDbg(const char* format, ...) {
-    va_list args;
-    va_start(args, format);
-
-    kprintf("[Privmem] ");   
-    kprintf(format, args);
-
-    va_end(args);
-}
-
 void FlushTB() {
     UINT64 CR4 = __readcr4();
 
